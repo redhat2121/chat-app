@@ -1,12 +1,14 @@
 import React, { memo } from 'react';
 import { ButtonToolbar, Icon } from 'rsuite';
 import { Link } from 'react-router-dom';
-import { useCurrentRoom } from '../../rooms/current-room-context';
+import { useCurrentRoom } from '../../../context/current-room-context';
 import { useMediaQuery } from '../../../misc/custom-hooks';
 import RoomInfoBtnModal from './RoomInfoBtnModal';
+import EditRoomBtnDrawer from './EditRoomBtnDrawer';
 
 const ChatTop = () => {
   const name = useCurrentRoom(v => v.name);
+  const isAdmin = useCurrentRoom(v => v.isAdmin);
 
   const isMobile = useMediaQuery('(max-width: 992px)');
 
@@ -28,7 +30,9 @@ const ChatTop = () => {
           <span className="text-disappear">{name}</span>
         </h4>
 
-        <ButtonToolbar className="ws-nowrap">todo</ButtonToolbar>
+        <ButtonToolbar className="ws-nowrap">
+          {isAdmin && <EditRoomBtnDrawer />}
+        </ButtonToolbar>
       </div>
       <div className="d-flex justify-content-between align-items-center">
         <span>todo</span>

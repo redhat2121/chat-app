@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Button, Modal } from 'rsuite';
 import { useModalState } from '../../../misc/custom-hooks';
-import { useCurrentRoom } from '../../rooms/current-room-context';
+import { useCurrentRoom } from '../../../context/current-room-context';
 
 const RoomInfoBtnModal = () => {
   const { isOpen, open, close } = useModalState();
