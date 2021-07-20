@@ -8,9 +8,22 @@ import { useCurrentRoom } from '../../../context/current-room-context';
 import { auth } from '../../../misc/firebase';
 import { useHover, useMediaQuery } from '../../../misc/custom-hooks';
 import IconBtnControl from './IconBtnControl';
+import ImgBtnModal from './imgBtnModal';
 
-const MessageItem = ({ message, handleAdmin, handleLike }) => {
-  const { author, createdAt, text, likes, likeCount } = message;
+const renderFileMsg = file => {
+  if (file.contentType.includes('image')) {
+    return (
+      <div className="height-220">
+        <ImgBtnModal src={file.url} fileName={file.name} />
+      </div>
+    );
+  }
+
+  return <a href={file.url}>Download [file.name]</a>;
+};
+
+const MessageItem = ({ message, handleAdmin, handleLike, handleDelete }) => {
+  const { author, createdAt, text, file, likes, likeCount } = message;
   const [selfRef, isHover] = useHover();
   const isMobile = useMediaQuery('(max-width: 992px)');
   const isAdmin = useCurrentRoom(v => v.isAdmin);
@@ -61,9 +74,18 @@ const MessageItem = ({ message, handleAdmin, handleLike }) => {
           onClick={() => handleLike(message.id)}
           badgeContent={likeCount}
         />
+        {IsAuthor && (
+          <IconBtnControl
+            isVisible={canShowIcons}
+            iconName="close"
+            tooltip="Delete this message"
+            onClick={() => handleDelete(message.id)}
+          />
+        )}
       </div>
       <div>
-        <span className="word-breal-all">{text}</span>
+        {text && <span className="word-breal-all">{text}</span>}
+        {file && renderFileMsg(file)}
       </div>
     </li>
   );
