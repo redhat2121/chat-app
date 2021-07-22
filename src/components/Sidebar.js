@@ -16,10 +16,12 @@ const Sidebar = () => {
 
   return (
     <div className="h-100 pt-2">
-      <div>
+      <div ref={topSideBarRef}>
         <DashboardToggle />
         <CreateRoomBtnModal />
-        <Divider>Join converstation</Divider>
+        <Divider style={{ margin: 0, padding: '30px 0' }}>
+          Join converstation
+        </Divider>
       </div>
       <ChatRoomList aboveElHeight={height} />
     </div>
