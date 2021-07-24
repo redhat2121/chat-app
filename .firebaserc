@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "chat-web-app-b76f0"
+    "default": "chat-web-app-b76f0",
+    "deploy": "chat-web-app-b76f0"
   }
 }
