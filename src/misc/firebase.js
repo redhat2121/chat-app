@@ -3,6 +3,9 @@ import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
 import 'firebase/messaging';
+import 'firebase/functions';
+import { Notification as Toast } from 'rsuite';
+import { isLocalhost } from './helpers';
 
 const config = {
   apiKey: 'AIzaSyDCAhx1KAQaQLg-Cj9kPrEO-1qQ9CdcFy8',
@@ -13,21 +16,26 @@ const config = {
   appId: '1:121706901545:web:2933186348797c7d0c6c38',
 };
 
+export const fcmVapidKey =
+  'BNMZaKfB2DSUUPnsmrrotsXtm9ysFDSQZaUeKEBoyNSSQK3HKQT2eIdxpnDc46vuRVkWBcPmF9pWcHWraQxhodI';
+
 const app = firebase.initializeApp(config);
 export const auth = app.auth();
 export const database = app.database();
 export const storage = app.storage();
+export const functions = app.functions('us-central1');
 
 export const messaging = firebase.messaging.isSupported()
   ? app.messaging()
   : null;
 
 if (messaging) {
-  messaging.usePublicVapidKey(
-    'BNMZaKfB2DSUUPnsmrrotsXtm9ysFDSQZaUeKEBoyNSSQK3HKQT2eIdxpnDc46vuRVkWBcPmF9pWcHWraQxhodI'
-  );
-
-  messaging.onMessage(data => {
-    console.log(data);
+  messaging.onMessage(({ notification }) => {
+    const { title, body } = notification;
+    Toast.info({ title, description: body, duration: 0 });
   });
+}
+
+if (isLocalhost) {
+  functions.useEmulator('localhost', 5001);
 }
