@@ -6,6 +6,7 @@ import { useMediaQuery } from '../../../misc/custom-hooks';
 import RoomInfoBtnModal from './RoomInfoBtnModal';
 import EditRoomBtnDrawer from './EditRoomBtnDrawer';
 import SendFcmBnModal from './SendFcmBTModal';
+import AskFcmBtnModal from './AskFcmBtnModal';
 
 const ChatTop = () => {
   const name = useCurrentRoom(v => v.name);
@@ -32,6 +33,7 @@ const ChatTop = () => {
         </h4>
 
         <ButtonToolbar className="ws-nowrap">
+          <AskFcmBtnModal />
           {isAdmin && <EditRoomBtnDrawer />}
         </ButtonToolbar>
       </div>

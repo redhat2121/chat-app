@@ -33,7 +33,7 @@ const EditRoomBtnDrawer = () => {
   };
 
   return (
-    <div>
+    <>
       <Button className="br-circle" size="sm" color="red" onClick={open}>
         a
       </Button>
@@ -63,7 +63,7 @@ const EditRoomBtnDrawer = () => {
           </Button>
         </Drawer.Footer>
       </Drawer>
-    </div>
+    </>
   );
 };
 
